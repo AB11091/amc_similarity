@@ -4,14 +4,16 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from astrapy import DataAPIClient
 from astrapy.constants import VectorMetric
+from dotenv import load_dotenv
 import os
 import json
 
-
-client = DataAPIClient(os.environ["ASTRA_DB_APPLICATION_TOKEN"])
-database = client.get_database(os.environ["ASTRA_DB_API_ENDPOINT"])
+load_dotenv()
+print(sys.path)
+client = DataAPIClient(os.getenv("ASTRA_DB_APPLICATION_TOKEN"))
+database = client.get_database(os.getenv("ASTRA_DB_API_ENDPOINT"))
 collection = database.get_collection('amc_similarity_nvidia_embeddings')
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 CORS(app)
 
 @app.route('/')
