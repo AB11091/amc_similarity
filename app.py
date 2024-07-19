@@ -13,12 +13,12 @@ print(sys.path)
 client = DataAPIClient(os.environ["ASTRA_DB_APPLICATION_TOKEN"])
 database = client.get_database(os.environ["ASTRA_DB_API_ENDPOINT"])
 collection = database.get_collection('amc_similarity_nvidia_embeddings')
-app = Flask(__name__)
+app = Flask(__name__, static_folder='', static_url_path='')
 CORS(app)
 
 @app.route('/')
 def serve_index():
-    return send_from_directory('index.html')
+    return send_from_directory(os.getcwd(), 'index.html')
 
 
 @app.route('/process', methods=['GET'])
