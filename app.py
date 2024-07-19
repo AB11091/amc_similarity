@@ -10,15 +10,15 @@ import json
 
 load_dotenv()
 print(sys.path)
-client = DataAPIClient(os.getenv("ASTRA_DB_APPLICATION_TOKEN"))
-database = client.get_database(os.getenv("ASTRA_DB_API_ENDPOINT"))
+client = DataAPIClient(os.environ["ASTRA_DB_APPLICATION_TOKEN"])
+database = client.get_database(os.environ["ASTRA_DB_API_ENDPOINT"])
 collection = database.get_collection('amc_similarity_nvidia_embeddings')
-app = Flask(__name__, static_folder='static')
+app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
 def serve_index():
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory('index.html')
 
 
 @app.route('/process', methods=['GET'])
