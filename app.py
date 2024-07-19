@@ -1,5 +1,4 @@
 import sys
-from sentence_transformers import SentenceTransformer
 from decimal import Decimal
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
@@ -14,7 +13,6 @@ database = client.get_database(os.environ["ASTRA_DB_API_ENDPOINT"])
 collection = database.get_collection('amc_similarity_with_link')
 app = Flask(__name__)
 CORS(app)
-model = SentenceTransformer("all-MiniLM-L6-v2")
 
 @app.route('/')
 def serve_index():
@@ -28,13 +26,10 @@ def get_embedding():
     if not text_input:
         return jsonify({'error': 'No input text provided'}), 400
 
-
-    result = model.encode(text_input)
-    result = [float(num) for num in result]
-
     search_results = collection.find(
-        sort={"$vector": result},
+        sort={"$vectorize": text_input},
         limit=10,
+        projection={"$vectorize": True},
     )
 
     return [document for document in enumerate(search_results)]
