@@ -62,7 +62,7 @@ document.querySelector('#problemTextButton').addEventListener('click', async fun
     const raw_text = document.getElementById('problemTextInput').value;
     const results_table = document.getElementById('results-table')
     console.log(raw_text)
-    fetch(`http://localhost:5000/process?rawtext=${encodeURIComponent(raw_text)}`)
+    fetch(`/process?rawtext=${encodeURIComponent(raw_text)}`)
     .then(response => response.json())
     .then(data => {
         if (Array.isArray(data)) {
