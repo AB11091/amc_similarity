@@ -12,7 +12,7 @@ import json
 client = DataAPIClient(os.environ["ASTRA_DB_APPLICATION_TOKEN"])
 database = client.get_database(os.environ["ASTRA_DB_API_ENDPOINT"])
 collection = database.get_collection('amc_similarity_with_link')
-app = Flask(__name__, static_folder='frontend')
+app = Flask(__name__)
 CORS(app)
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
