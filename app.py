@@ -10,7 +10,7 @@ import json
 
 client = DataAPIClient(os.environ["ASTRA_DB_APPLICATION_TOKEN"])
 database = client.get_database(os.environ["ASTRA_DB_API_ENDPOINT"])
-collection = database.get_collection('amc_similarity_with_link')
+collection = database.get_collection('amc_similarity_nvidia_embeddings')
 app = Flask(__name__)
 CORS(app)
 
